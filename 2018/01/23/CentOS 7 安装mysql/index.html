@@ -1,0 +1,682 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.卸载之前的mysql列出所有被安装的mysql
+1rpm package **rpm -qa | grep mariadb
+卸载
+1rpm -e --nodeps mariadb-libs-5.5.37-1.el7_0.x86_64">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7 安装mysql">
+<meta property="og:url" content="http://yoursite.com/2018/01/23/CentOS 7 安装mysql/index.html">
+<meta property="og:site_name" content="JasonMsbaby">
+<meta property="og:description" content="1.卸载之前的mysql列出所有被安装的mysql
+1rpm package **rpm -qa | grep mariadb
+卸载
+1rpm -e --nodeps mariadb-libs-5.5.37-1.el7_0.x86_64">
+<meta property="og:updated_time" content="2018-01-23T11:29:23.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS 7 安装mysql">
+<meta name="twitter:description" content="1.卸载之前的mysql列出所有被安装的mysql
+1rpm package **rpm -qa | grep mariadb
+卸载
+1rpm -e --nodeps mariadb-libs-5.5.37-1.el7_0.x86_64">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/23/CentOS 7 安装mysql/"/>
+
+
+
+
+
+  <title> CentOS 7 安装mysql | JasonMsbaby </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JasonMsbaby</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">君子之交淡如水</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/23/CentOS 7 安装mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张杰">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JasonMsbaby">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CentOS 7 安装mysql
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-23T17:05:57+08:00">
+                2018-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="1-卸载之前的mysql"><a href="#1-卸载之前的mysql" class="headerlink" title="1.卸载之前的mysql"></a>1.卸载之前的mysql</h4><p>列出所有被安装的mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm package **rpm -qa | grep mariadb</div></pre></td></tr></table></figure>
+<p>卸载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -e --nodeps mariadb-libs-5.5.37-1.el7_0.x86_64</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="2-在-etc-下面新建my-cnf"><a href="#2-在-etc-下面新建my-cnf" class="headerlink" title="2.在/etc/下面新建my.cnf"></a>2.在/etc/下面新建my.cnf</h4><h4 id="3-分别安装server-devel-client"><a href="#3-分别安装server-devel-client" class="headerlink" title="3.分别安装server devel client"></a>3.分别安装server devel client</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">rpm -ivh MySQL-server-advanced-5.6.22-1.el7.x86_64.rpm </div><div class="line">rpm -ivh MySQL-devel-advanced-5.6.22-1.el7.x86_64.rpm </div><div class="line">rpm -ivh MySQL-client-advanced-5.6.22-1.el7.x86_64.rpm</div></pre></td></tr></table></figure>
+<h4 id="4-安装perl"><a href="#4-安装perl" class="headerlink" title="4.安装perl"></a>4.安装perl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y perl-Module-Install.noarch</div></pre></td></tr></table></figure>
+<h4 id="5-初始化数据库"><a href="#5-初始化数据库" class="headerlink" title="5.初始化数据库"></a>5.初始化数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/mysql_install_db</div></pre></td></tr></table></figure>
+<h4 id="6-启动mysql服务"><a href="#6-启动mysql服务" class="headerlink" title="6.启动mysql服务"></a>6.启动mysql服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service mysql start</div></pre></td></tr></table></figure>
+<h4 id="7-设置密码"><a href="#7-设置密码" class="headerlink" title="7.设置密码"></a>7.设置密码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql -uroot –p</div><div class="line">SET PASSWORD = PASSWORD(&apos;123456&apos;);</div></pre></td></tr></table></figure>
+<h4 id="8-允许远程登录"><a href="#8-允许远程登录" class="headerlink" title="8.允许远程登录"></a>8.允许远程登录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mysql&gt; use mysql;</div><div class="line">mysql&gt; select host,user,password from user;</div><div class="line">+-----------------------+------+-------------------------------------------+</div><div class="line">| host                  | user | password                                  |</div><div class="line">+-----------------------+------+-------------------------------------------+</div><div class="line">| localhost             | root | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9 |</div><div class="line">| localhost.localdomain | root | *1237E2CE819C427B0D8174456DD83C47480D37E8 |</div><div class="line">| 127.0.0.1             | root | *1237E2CE819C427B0D8174456DD83C47480D37E8 |</div><div class="line">| ::1                   | root | *1237E2CE819C427B0D8174456DD83C47480D37E8 |</div><div class="line">+-----------------------+------+-------------------------------------------+</div><div class="line">mysql&gt; update user set password=password(&apos;123456&apos;) where user=&apos;root&apos;;</div><div class="line">mysql&gt; update user set host=&apos;%&apos; where user=&apos;root&apos; and host=&apos;localhost&apos;;</div><div class="line">mysql&gt; flush privileges;</div><div class="line">mysql&gt; exit</div></pre></td></tr></table></figure>
+<h4 id="9-设置开机自启动"><a href="#9-设置开机自启动" class="headerlink" title="9.设置开机自启动"></a>9.设置开机自启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig mysql on</div><div class="line">chkconfig --list | grep mysql</div></pre></td></tr></table></figure>
+<h4 id="10-MySQL的默认安装位置"><a href="#10-MySQL的默认安装位置" class="headerlink" title="10.MySQL的默认安装位置"></a>10.MySQL的默认安装位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arb/mysql/ #数据库目录</div><div class="line">/usr/mysql #配置文件目录</div><div class="line">/usr/bin #相关命令目录</div><div class="line">/etc/init.d/mysql #启动脚本</div></pre></td></tr></table></figure>
+<h4 id="11-修改my-cnf配置文件"><a href="#11-修改my-cnf配置文件" class="headerlink" title="11.修改my.cnf配置文件"></a>11.修改my.cnf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">password        = 123456</div><div class="line">port            = 3306</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld]</div><div class="line">port            = 3306</div><div class="line">character_set_server=utf8</div><div class="line">character_set_client=utf8</div><div class="line">collation-server=utf8_general_ci</div><div class="line">#(注意linux下mysql安装完后是默认：表名区分大小写，列名不区分大小写； 0：区分大小写，1：不区分大小写)</div><div class="line">lower_case_table_names=1</div><div class="line">#(设置最大连接数，默认为 151，MySQL服务器允许的最大连接数16384; )</div><div class="line">max_connections=1000</div><div class="line">[mysql]</div><div class="line">default-character-set = utf8</div></pre></td></tr></table></figure>
+<h4 id="11-修改my-cnf配置文件-1"><a href="#11-修改my-cnf配置文件-1" class="headerlink" title="11.修改my.cnf配置文件"></a>11.修改my.cnf配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">password        = 123456</div><div class="line">port            = 3306</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld]</div><div class="line">port            = 3306</div><div class="line">character_set_server=utf8</div><div class="line">character_set_client=utf8</div><div class="line">collation-server=utf8_general_ci</div><div class="line">#(注意linux下mysql安装完后是默认：表名区分大小写，列名不区分大小写； 0：区分大小写，1：不区分大小写)</div><div class="line">lower_case_table_names=1</div><div class="line">#(设置最大连接数，默认为 151，MySQL服务器允许的最大连接数16384; )</div><div class="line">max_connections=1000</div><div class="line">[mysql]</div><div class="line">default-character-set = utf8</div></pre></td></tr></table></figure>
+<h4 id="12-查看字符集"><a href="#12-查看字符集" class="headerlink" title="12.查看字符集"></a>12.查看字符集</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show variables like &apos;%collation%&apos;;</div><div class="line">show variables like &apos;%char%&apos;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/15/关于培训/" rel="next" title="关于培训">
+                <i class="fa fa-chevron-left"></i> 关于培训
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="张杰" />
+          <p class="site-author-name" itemprop="name">张杰</p>
+           
+              <p class="site-description motion-element" itemprop="description">君子之交淡如水</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-卸载之前的mysql"><span class="nav-number">1.</span> <span class="nav-text">1.卸载之前的mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在-etc-下面新建my-cnf"><span class="nav-number">2.</span> <span class="nav-text">2.在/etc/下面新建my.cnf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-分别安装server-devel-client"><span class="nav-number">3.</span> <span class="nav-text">3.分别安装server devel client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-安装perl"><span class="nav-number">4.</span> <span class="nav-text">4.安装perl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-初始化数据库"><span class="nav-number">5.</span> <span class="nav-text">5.初始化数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-启动mysql服务"><span class="nav-number">6.</span> <span class="nav-text">6.启动mysql服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-设置密码"><span class="nav-number">7.</span> <span class="nav-text">7.设置密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-允许远程登录"><span class="nav-number">8.</span> <span class="nav-text">8.允许远程登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-设置开机自启动"><span class="nav-number">9.</span> <span class="nav-text">9.设置开机自启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-MySQL的默认安装位置"><span class="nav-number">10.</span> <span class="nav-text">10.MySQL的默认安装位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-修改my-cnf配置文件"><span class="nav-number">11.</span> <span class="nav-text">11.修改my.cnf配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-修改my-cnf配置文件-1"><span class="nav-number">12.</span> <span class="nav-text">11.修改my.cnf配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-查看字符集"><span class="nav-number">13.</span> <span class="nav-text">12.查看字符集</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张杰</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
